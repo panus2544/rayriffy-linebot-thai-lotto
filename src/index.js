@@ -24,7 +24,7 @@ server.post('/linebot', async (req, res) => {
   let text = req.body.events[0].message.text
 
   // Verify input
-  if (!Number(text) || text.length !== 6 || text !== '000000') {
+  if (!Number(text) || text.length !== 6) {
     const payload = {
       replyToken: req.body.events[0].replyToken,
       messages: [
