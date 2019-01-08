@@ -9,16 +9,15 @@ rayriffy-linebot-thai-lotto
 $ git clone https://github.com/rayriffy/rayriffy-linebot-thai-lotto
 ```
 
-2. Edit `.firebaserc` change project id to yours instead
+2. Set your environment variables
 
-3. Add config variables
+|Name|Default|Description|
+|-|-|-|
+|`PORT`|3000|Port that your ExpressJS server will run|
+|`ACCESS_TOKEN`|SOMEKEY|LINE Channel access token|
+
+4. Run your server
 
 ```
-$ firebase functions:config:set line.access_token="YOUR_LINE_ACCESS_TOKEN"
-```
-
-4. Deploy
-
-```
-$ yarn run deploy
+$ yarn start
 ```
