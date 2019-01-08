@@ -1,7 +1,4 @@
 node_modules/
 .env
 yarn-error.log
-functions/
-.runtimeconfig.json
-.firebase/
-firebase-debug.log
+dist/
