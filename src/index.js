@@ -3,13 +3,19 @@ import bodyParser from 'body-parser'
 import express from 'express'
 
 const server = express()
-const {PORT = 3000, ACCESS_TOKEN = null} = process.env
+const {
+  PORT = 3000,
+  ACCESS_TOKEN = 'oFZLGiWiHqWLwFV0EA3783hk6QT8d42ajaUrvmKCePlMpz9O8ThiHuKWkrlNPejsMRsHnE7j45qThX3QZcAQ5bo7mHKsTTVmgC5Fm20uPaCqBADq+fZD5HlA5FAORBkG3DcJlpovxWlhKehb3UfYywdB04t89/1O/w1cDnyilFU=',
+} = process.env
 
 const LINE_API_URL = 'https://api.line.me/v2/bot/message'
 const REQUEST_HEADER = {
   'Content-Type': `application/json`,
   Authorization: `Bearer ${ACCESS_TOKEN}`,
 }
+
+server.use(bodyParser.urlencoded({extended: false}))
+server.use(bodyParser.json())
 
 server.post('/linebot', async (req, res) => {
   console.log(req.body.events[0].message)
@@ -147,6 +153,4 @@ server.get('*', (req, res) => {
   )
 })
 
-server
-  .use(bodyParser.json())
-  .listen(PORT, () => console.log(`App listening on port ${PORT}!`))
+server.listen(PORT, () => console.log(`App listening on port ${PORT}!`))
