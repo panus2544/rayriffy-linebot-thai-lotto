@@ -1,15 +1,17 @@
-import * as functions from 'firebase-functions'
 import axios from 'axios'
+import bodyParser from 'body-parser'
+import express from 'express'
 
-const config = functions.config()
+const server = express()
+const {PORT = 3000, ACCESS_TOKEN = null} = process.env
 
 const LINE_API_URL = 'https://api.line.me/v2/bot/message'
 const REQUEST_HEADER = {
   'Content-Type': `application/json`,
-  Authorization: `Bearer ${config.line.access_token}`,
+  Authorization: `Bearer ${ACCESS_TOKEN}`,
 }
 
-export let linebot = functions.https.onRequest(async (req, res) => {
+server.post('/linebot', async (req, res) => {
   console.log(req.body.events[0].message)
 
   if (req.body.events[0].message.type !== 'text') {
@@ -132,5 +134,19 @@ export let linebot = functions.https.onRequest(async (req, res) => {
       .catch(err => console.log(err.data))
   }
 
-  res.status(200).send('OK!')
+  res.send('OK!')
 })
+
+server.get('*', (req, res) => {
+  res.send(
+    {
+      status: 'failure',
+      response: 'route not found',
+    },
+    404,
+  )
+})
+
+server
+  .use(bodyParser.json())
+  .listen(PORT, () => console.log(`App listening on port ${PORT}!`))
